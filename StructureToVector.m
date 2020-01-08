@@ -1,7 +1,7 @@
-%¼ÆËãÊ¯Ä«Ï©±íÃæ½á¹¹·¨ÏòÁ¿
+%è®¡ç®—çŸ³å¢¨çƒ¯è¡¨é¢ç»“æ„æ³•å‘é‡
 global DotMat;
 [x,y] = textread('RawData/262.txt','%f%f');
-is_used = zeros(length(x),1);  %±íÊ¾¸ÃµãÊÇ·ñÊÇÁâĞÎµÄÆäÖĞÒ»µã
+is_used = zeros(length(x),1);  %è¡¨ç¤ºè¯¥ç‚¹æ˜¯å¦æ˜¯è±å½¢çš„å…¶ä¸­ä¸€ç‚¹
 DotMat = [x,y,is_used];
 RhoList = RhoMatch();
 RhoNum = size(RhoList,1)
