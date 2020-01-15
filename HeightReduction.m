@@ -50,6 +50,7 @@ for n=1:UnionNum
     end
 end
 Height = [DotMat(:,1), DotMat(:,2), Height];
+plot3(Height(:,1),Height(:,2),Height(:,3),'.');
     
 function re = CartersianCal(a,b)
     re.x0 = cos(b)*sin(a);
