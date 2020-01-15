@@ -1,5 +1,5 @@
 load nVector.mat;
-is_new = 1;  % è¡¨ç¤ºéå†è¿‡ç¨‹æ˜¯å¦æœ‰æ–°å¢è±å½¢
+is_new = 1;  % ±íÊ¾±éÀú¹ı³ÌÊÇ·ñÓĞĞÂÔöÁâĞÎ
 pool(1) = RhoList(1,1);
 RhoNum = size(RhoList,1);
 RhoUnion = [];
@@ -23,7 +23,7 @@ while(is_new)
     end
 end
 
-UnionNum = length(RhoUnion)  %è¡¨ç¤ºæœ€å¤§å¯è¿é€šè±å½¢æ•°é‡
+UnionNum = length(RhoUnion)  %±íÊ¾×î´ó¿ÉÁ¬Í¨ÁâĞÎÊıÁ¿
 RhoMap = zeros(RhoNum,1);
 PointMap = zeros(RhoNum,4);
 Height = zeros(size(DotMat,1),1);
@@ -40,8 +40,11 @@ for n=1:UnionNum
                 nCart = CartersianCal(nVector.a(List(i)),nVector.b(List(i)));
                 for j=1:4
                     if ~PointMap(List(i),j)
-                        %è®¡ç®—è¯¥ç‚¹é«˜åº¦
-                        Height(RhoList(List(i),j)) = HeightCal(nCart,DotMat(RhoList(List(i),j),1),DotMat(RhoList(List(i),j),2));
+                        %¼ÆËãÏà¶Ô×ø±ê
+                        rx = DotMat(RhoList(List(i),j),1) - DotMat(RhoList(List(i),1),1);
+                        ry = DotMat(RhoList(List(i),j),2) - DotMat(RhoList(List(i),1),2);
+                        %¼ÆËã¸Ãµã¸ß¶È
+                        Height(RhoList(List(i),j)) = HeightCal(nCart,rx,ry);
                         PointMap(List(i),j) = 1;
                     end
                 end
@@ -52,17 +55,18 @@ end
 Height = [DotMat(:,1), DotMat(:,2), Height];
 plot3(Height(:,1),Height(:,2),Height(:,3),'.');
     
-function re = CartersianCal(a,b)
+function re = CartersianCal(a,b)  % ½«¼«×ø±êÊ¸Á¿×ª»»³ÉÖ±½Ç×ø±ê
     re.x0 = cos(b)*sin(a);
     re.y0 = cos(b)*cos(a);
     re.z0 = sin(b);
 end
 
-function h = HeightCal(n,x,y)
+function h = HeightCal(n,x,y)  % ¼ÆËãÄ³¶¥µã¸ß¶È
+    %x,yÎªÏà¶Ô×ø±ê
     h = -(x * n.x0 + y * n.y0) / n.z0;
 end
 
-function list = RhoAroundPoint(pn,RhoList)
+function list = RhoAroundPoint(pn,RhoList)  %ÇóÄ³µãÖÜÎ§µÄÁâĞÎ
     list = [];
     for n=1:size(RhoList,1)
         for m=1:4
