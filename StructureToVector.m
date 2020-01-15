@@ -1,12 +1,12 @@
-%ËÆ°ÁÆóÁü≥Â¢®ÁÉØË°®Èù¢ÁªìÊûÑÊ≥ïÂêëÈáè
+%º∆À„ Øƒ´œ©±Ì√ÊΩ·ππ∑®œÚ¡ø
 global DotMat;
 [x,y] = textread('RawData/262.txt','%f%f');
-is_used = zeros(length(x),1);  %Ë°®Á§∫ËØ•ÁÇπÊòØÂê¶ÊòØËè±ÂΩ¢ÁöÑÂÖ∂‰∏≠‰∏ÄÁÇπ
+is_used = zeros(length(x),1);  %±Ì æ∏√µ„ «∑Ò «¡‚–Œµƒ∆‰÷–“ªµ„
 DotMat = [x,y,is_used];
 RhoList = RhoMatch();
 RhoNum = size(RhoList,1)
 nVector = VectorCal(RhoList);
-save("nVector.mat",'nVector','RhoList');
+save("nVector.mat",'nVector','RhoList','DotMat');
 quiver(nVector.xs, nVector.ys, nVector.a, nVector.b);
 
 %%  Function
@@ -23,7 +23,7 @@ function List = RhoMatch()
             if p3~=0
                 p4 = ScanPoints(p1,+4,+20,-30,-10,N);
                 if p4~= 0
-                    if ~DotMat(p1,3) || ~DotMat(p2,3) || ~DotMat(p3,3) || ~DotMat(p4,3)
+                    if DotMat(p1,3) || ~DotMat(p2,3) || ~DotMat(p3,3) || ~DotMat(p4,3)
                         Rho = [p1,p2,p3,p4,mode];
                         DotMat(p1,3) = 1;
                         DotMat(p2,3) = 1;
@@ -47,15 +47,17 @@ function List = RhoMatch()
             if p3~=0
                 p4 = ScanPoints(p1,+10,+30,+4,+20,N);
                 if p4~= 0
-                    Rho = [p1,p2,p3,p4,mode];
-                    DotMat(p1,3) = 1;
-                    DotMat(p2,3) = 1;
-                    DotMat(p3,3) = 1;
-                    DotMat(p4,3) = 1;
-                    if ~isempty(List)
-                        List = [List;Rho];
-                    else
-                         List = Rho;
+                    if DotMat(p1,3) || ~DotMat(p2,3) || ~DotMat(p3,3) || ~DotMat(p4,3)
+                        Rho = [p1,p2,p3,p4,mode];
+                        DotMat(p1,3) = 1;
+                        DotMat(p2,3) = 1;
+                        DotMat(p3,3) = 1;
+                        DotMat(p4,3) = 1;
+                        if ~isempty(List)
+                            List = [List;Rho];
+                        else
+                             List = Rho;
+                        end
                     end
                 end
             end
